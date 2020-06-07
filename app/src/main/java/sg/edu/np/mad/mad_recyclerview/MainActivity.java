@@ -33,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DataModel.TaskList taskList = new DataModel.TaskList();
-
+        taskList.addTask("Buy milk");
+        taskList.addTask("Send postage");
+        taskList.addTask("Buy Android development book");
         TaskDesc = (EditText) findViewById(R.id.taskDesc);
         TaskAdd = (Button) findViewById(R.id.taskAdd);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -49,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
         adapter = new Adapter(taskList);
         LinearLayoutManager taskLayoutManager = new LinearLayoutManager(this);
 
-        RecyclerView.setLayoutManager(taskLayoutManager);
-        RecyclerView.setItemAnimator(new DefaultItemAnimator());
-        RecyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(taskLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
     }
 
 
