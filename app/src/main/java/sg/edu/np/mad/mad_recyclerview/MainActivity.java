@@ -36,9 +36,28 @@ public class MainActivity extends AppCompatActivity {
         taskList.addTask("Buy milk");
         taskList.addTask("Send postage");
         taskList.addTask("Buy Android development book");
+
         TaskDesc = (EditText) findViewById(R.id.taskDesc);
         TaskAdd = (Button) findViewById(R.id.taskAdd);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        TaskAdd.setOnClickListener(new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+
+                String newTaskDescription = TaskDesc.getText().toString();
+
+                TaskDesc.setText("");
+
+                if (newTaskDescription.length() > 0) {
+                   adapter.taskList.addTask(newTaskDescription);
+                    adapter.notifyDataSetChanged();
+                   showNewEntry(recyclerView, adapter.taskList);
+
+                }
+            }
+        });
+
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -62,13 +81,12 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Upon calling this method, the keyboard will retract
      * and the recyclerview will scroll to the last item
-     *
-     * @param rv RecyclerView for scrolling to
-     * @param data ArrayList that was passed into RecyclerView
+     *  @param rv RecyclerView for scrolling to
+     * @param taskList tasklist that was passed into RecyclerView
      */
-    private void showNewEntry(RecyclerView rv, ArrayList data){
+    private void showNewEntry(RecyclerView rv, DataModel.TaskList taskList){
         //scroll to the last item of the recyclerview
-        rv.scrollToPosition(data.size() - 1);
+        rv.scrollToPosition(taskList.countTasks() - 1);
 
         //auto hide keyboard after entry
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
